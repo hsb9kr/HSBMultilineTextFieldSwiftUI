@@ -8,7 +8,7 @@
 import SwiftUI
 import Combine
 
-class MultilineTextFieldViewModel: ObservableObject {
+public class MultilineTextFieldViewModel: ObservableObject {
     private var cancellables: Set<AnyCancellable> = []
     @Published var viewModels: [MultilineTextFieldItemViewModel] = []
     @Published var focused: MultilineTextFieldItemViewModel?

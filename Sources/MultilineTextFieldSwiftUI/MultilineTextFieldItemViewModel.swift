@@ -8,7 +8,7 @@
 import SwiftUI
 import Combine
 
-class MultilineTextFieldItemViewModel: NSObject, ObservableObject {
+public class MultilineTextFieldItemViewModel: NSObject, ObservableObject {
     
     private let onRemove: (MultilineTextFieldItemViewModel) -> Void
     private var cancellables: Set<AnyCancellable> = []
@@ -47,7 +47,7 @@ class MultilineTextFieldItemViewModel: NSObject, ObservableObject {
 }
 
 extension MultilineTextFieldItemViewModel: UITextViewDelegate {
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+    public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         guard textView.text.isEmpty, let char = text.cString(using: String.Encoding.utf8) else {
             return true
         }
@@ -66,16 +66,16 @@ extension MultilineTextFieldItemViewModel: UITextViewDelegate {
         }
     }
     
-    func textViewDidChange(_ textView: UITextView) {
+    public func textViewDidChange(_ textView: UITextView) {
         text = textView.text
         sizeToFit(textView: textView)
     }
     
-    func textViewDidBeginEditing(_ textView: UITextView) {
+    public func textViewDidBeginEditing(_ textView: UITextView) {
         sizeToFit(textView: textView)
     }
     
-    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+    public func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         sizeToFit(textView: textView)
         return true
     }
