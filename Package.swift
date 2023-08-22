@@ -13,7 +13,7 @@ let package = Package(
         .library(
             name: "MultilineTextFieldSwiftUI",
             targets: ["MultilineTextFieldSwiftUI"]),
-        .library(name: "SwiftUIIntrospect", targets: ["swiftui-introspect", "MultilineTextFieldSwiftUI"])
+        .library(name: "SwiftUIIntrospect", targets: ["MultilineTextFieldSwiftUI"])
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -24,6 +24,8 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "MultilineTextFieldSwiftUI",
-            dependencies: []),
+            dependencies: [
+                .product(name: "SwiftUIIntrospect", package: "swiftui-introspect")
+            ]),
     ]
 )
