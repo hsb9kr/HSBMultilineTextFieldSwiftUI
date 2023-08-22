@@ -16,11 +16,11 @@ public struct MultilineTextField: View {
     private let backgroundColor: Color = Color(uiColor: UIColor.systemBackground)
     private let padding: CGFloat = 4
     private let minHeight: CGFloat?
-    @ObservedObject var viewModel: MultilineTextFieldViewModel
     @State private var bold: Bool?
     @State private var fontSize: CGFloat?
+    @ObservedObject public var viewModel: MultilineTextFieldViewModel
     
-    init(regularFontSize: CGFloat = 14, mediumFontSize: CGFloat = 16, minHeight: CGFloat? = 50, onChanged: @escaping ([MultilinTextData]) -> Void) {
+    public init(regularFontSize: CGFloat = 14, mediumFontSize: CGFloat = 16, minHeight: CGFloat? = 50, onChanged: @escaping ([MultilinTextData]) -> Void) {
         self.regularFontSize = regularFontSize
         self.mediumFontSize = mediumFontSize
         self.minHeight = minHeight
@@ -99,14 +99,13 @@ public struct MultilineTextField: View {
         }
     }
     
-    struct ItemView: View {
+    public struct ItemView: View {
         
         @EnvironmentObject var parentViewModel: MultilineTextFieldViewModel
-        @ObservedObject var viewModel: MultilineTextFieldItemViewModel
+        @ObservedObject public var viewModel: MultilineTextFieldItemViewModel
         @FocusState private var focused: Bool
-        @State var height: CGFloat = 0
         
-        var body: some View {
+        public var body: some View {
             if #available(iOS 16.0, *) {
                 TextField("", text: $viewModel.text, axis: .vertical)
                     .introspect(.textEditor, on: .iOS(.v16)) { view in
@@ -150,14 +149,6 @@ public struct MultilineTextField: View {
                         }
                     }
             }
-        }
-    }
-}
-
-struct MultilineTextField_Previews: PreviewProvider {
-    static var previews: some View {
-        MultilineTextField() { data in
-            
         }
     }
 }

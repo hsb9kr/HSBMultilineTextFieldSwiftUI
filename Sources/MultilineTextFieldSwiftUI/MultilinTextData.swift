@@ -8,7 +8,7 @@
 import SwiftUI
 
 public struct MultilinTextData {
-    let bold: Bool
-    let fontSize: CGFloat
-    let text: String
+    public let bold: Bool
+    public let fontSize: CGFloat
+    public let text: String
 }

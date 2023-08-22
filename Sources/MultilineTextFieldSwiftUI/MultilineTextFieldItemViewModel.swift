@@ -12,24 +12,24 @@ public class MultilineTextFieldItemViewModel: NSObject, ObservableObject {
     
     private let onRemove: (MultilineTextFieldItemViewModel) -> Void
     private var cancellables: Set<AnyCancellable> = []
-    @Published var text: String = ""
-    @Published var bold = false
-    @Published var fontSize: CGFloat
-    @Published var focused: Bool = false
-    @Published var height: CGFloat = 17
-    var textView: UITextView?
-    var data: MultilinTextData {
+    @Published public var text: String = ""
+    @Published public var bold = false
+    @Published public var fontSize: CGFloat
+    @Published public var focused: Bool = false
+    @Published public var height: CGFloat = 17
+    public var textView: UITextView?
+    public var data: MultilinTextData {
         .init(bold: bold, fontSize: fontSize, text: text)
     }
     
-    var displayFont: Font {
+    public var displayFont: Font {
         let font = Font.system(
            size: CGFloat(fontSize),
              weight: bold == true ? .bold : .regular)
         return font
     }
     
-    init(font size: CGFloat, onRemove: @escaping (MultilineTextFieldItemViewModel) -> Void) {
+    public init(font size: CGFloat, onRemove: @escaping (MultilineTextFieldItemViewModel) -> Void) {
         self.onRemove = onRemove
         self.fontSize = size
         super.init()
@@ -58,7 +58,7 @@ extension MultilineTextFieldItemViewModel: UITextViewDelegate {
         return true
     }
     
-    func sizeToFit(textView: UITextView) {
+    public func sizeToFit(textView: UITextView) {
         let fixedWidth = textView.frame.size.width
         let newSize = textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
         if height != newSize.height {

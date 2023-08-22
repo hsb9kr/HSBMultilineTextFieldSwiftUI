@@ -10,10 +10,10 @@ import Combine
 
 public class MultilineTextFieldViewModel: ObservableObject {
     private var cancellables: Set<AnyCancellable> = []
-    @Published var viewModels: [MultilineTextFieldItemViewModel] = []
-    @Published var focused: MultilineTextFieldItemViewModel?
+    @Published public var viewModels: [MultilineTextFieldItemViewModel] = []
+    @Published public var focused: MultilineTextFieldItemViewModel?
     
-    init(font size: CGFloat, onChanged: @escaping ([MultilinTextData]) -> Void) {
+    public init(font size: CGFloat, onChanged: @escaping ([MultilinTextData]) -> Void) {
         viewModels = [.init(font: size, onRemove: { viewModel in
             self.onRemove(viewModel: viewModel)
         })]
@@ -44,7 +44,7 @@ public class MultilineTextFieldViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
-    func onRemove(viewModel: MultilineTextFieldItemViewModel) {
+    public func onRemove(viewModel: MultilineTextFieldItemViewModel) {
         guard let index = viewModels.firstIndex(of: viewModel), index > 0 else { return }
         viewModels.remove(at: index)
         let viewModel = viewModels[index - 1]
