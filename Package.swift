@@ -25,6 +25,6 @@ let package = Package(
             name: "MultilineTextFieldSwiftUI",
             dependencies: [
 //                .product(name: "SwiftUIIntrospect", package: "swiftui-introspect")
-            ], path: "Sources/MultilineTextFieldSwiftUI"),
+            ]),
     ]
 )
