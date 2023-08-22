@@ -13,17 +13,20 @@ let package = Package(
         .library(
             name: "MultilineTextFieldSwiftUI",
             targets: ["MultilineTextFieldSwiftUI"]),
+        .library(name: "swiftui-introspect", type: .static, targets: ["MultilineTextFieldSwiftUI"])
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(url: "https://github.com/hsb9kr/HSBMultilineTextFieldSwiftUI", from: "0.0.1"),
+        .package(url: "https://github.com/siteline/SwiftUI-Introspect", from: "0.11.0"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "MultilineTextFieldSwiftUI",
-            dependencies: []),
+            dependencies: [
+                .product(name: "SwiftUIIntrospect", package: "swiftui-introspect")
+            ]),
         .testTarget(
             name: "MultilineTextFieldSwiftUITests",
             dependencies: ["MultilineTextFieldSwiftUI"]),
