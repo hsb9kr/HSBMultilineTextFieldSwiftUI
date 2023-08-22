@@ -6,14 +6,14 @@ import PackageDescription
 let package = Package(
     name: "MultilineTextFieldSwiftUI",
     platforms: [
-        .iOS(.v15)
+        .iOS(.v15),
     ],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
             name: "MultilineTextFieldSwiftUI",
             targets: ["MultilineTextFieldSwiftUI"]),
-        .library(name: "swiftui-introspect", type: .static, targets: ["MultilineTextFieldSwiftUI"])
+        .library(name: "SwiftUIIntrospect", targets: ["swiftui-introspect", "MultilineTextFieldSwiftUI"])
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -24,11 +24,6 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "MultilineTextFieldSwiftUI",
-            dependencies: [
-                .product(name: "SwiftUIIntrospect", package: "swiftui-introspect")
-            ]),
-        .testTarget(
-            name: "MultilineTextFieldSwiftUITests",
-            dependencies: ["MultilineTextFieldSwiftUI"]),
+            dependencies: []),
     ]
 )
