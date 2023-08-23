@@ -12,6 +12,7 @@ public class MultilineTextFieldItemViewModel: NSObject, ObservableObject {
     
     private let onRemove: (MultilineTextFieldItemViewModel) -> Void
     private var cancellables: Set<AnyCancellable> = []
+    public let placeholder: String
     @Published public var text: String = ""
     @Published public var bold = false
     @Published public var fontSize: CGFloat
@@ -29,9 +30,10 @@ public class MultilineTextFieldItemViewModel: NSObject, ObservableObject {
         return font
     }
     
-    public init(font size: CGFloat, onRemove: @escaping (MultilineTextFieldItemViewModel) -> Void) {
-        self.onRemove = onRemove
+    public init(placeholder: String = "", font size: CGFloat, onRemove: @escaping (MultilineTextFieldItemViewModel) -> Void) {
+        self.placeholder = placeholder
         self.fontSize = size
+        self.onRemove = onRemove
         super.init()
         $bold
             .combineLatest($fontSize)

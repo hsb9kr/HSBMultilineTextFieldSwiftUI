@@ -13,10 +13,12 @@ public class MultilineTextFieldViewModel: ObservableObject {
     @Published public var viewModels: [MultilineTextFieldItemViewModel] = []
     @Published public var focused: MultilineTextFieldItemViewModel?
     
-    public init(font size: CGFloat, onChanged: @escaping ([MultilinTextData]) -> Void) {
-        viewModels = [.init(font: size, onRemove: { viewModel in
+    public init(font size: CGFloat, placeholder: String, focused: Bool, onChanged: @escaping ([MultilinTextData]) -> Void) {
+        let itemViewModel: MultilineTextFieldItemViewModel = .init(placeholder: placeholder, font: size, onRemove: { viewModel in
             self.onRemove(viewModel: viewModel)
-        })]
+        })
+        viewModels = [itemViewModel]
+        itemViewModel.focused = focused
         $viewModels
             .flatMap { viewModels in
                 let textPublisher = Publishers

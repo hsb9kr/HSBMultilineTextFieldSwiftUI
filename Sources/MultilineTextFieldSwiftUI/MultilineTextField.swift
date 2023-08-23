@@ -16,15 +16,17 @@ public struct MultilineTextField: View {
     private let backgroundColor: Color = Color(uiColor: UIColor.systemBackground)
     private let padding: CGFloat = 4
     private let minHeight: CGFloat?
+    private let background: Color
     @State private var bold: Bool?
     @State private var fontSize: CGFloat?
     @ObservedObject public var viewModel: MultilineTextFieldViewModel
     
-    public init(regularFontSize: CGFloat = 14, mediumFontSize: CGFloat = 16, minHeight: CGFloat? = 50, onChanged: @escaping ([MultilinTextData]) -> Void) {
+    public init(regularFontSize: CGFloat = 14, mediumFontSize: CGFloat = 16, minHeight: CGFloat? = 50, placeholder: String = "", background: Color, focused: Bool = true, onChanged: @escaping ([MultilinTextData]) -> Void) {
         self.regularFontSize = regularFontSize
         self.mediumFontSize = mediumFontSize
         self.minHeight = minHeight
-        viewModel = .init(font: regularFontSize, onChanged: onChanged)
+        self.background = background
+        viewModel = .init(font: regularFontSize, placeholder: placeholder, focused: focused, onChanged: onChanged)
     }
     
     public var body: some View {
@@ -34,7 +36,7 @@ public struct MultilineTextField: View {
                 ItemView(viewModel: viewModel)
             }
             Rectangle()
-                .foregroundColor(Color.black.opacity(0.01))
+                .foregroundColor(background)
                 .frame(minHeight: minHeight)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .onTapGesture {
@@ -49,7 +51,6 @@ public struct MultilineTextField: View {
                     itemViewModel.focused = true
                 }
         }
-        .padding()
         .onReceive(viewModel.$focused) { focused in
             bold = focused?.bold
             fontSize = focused?.fontSize
@@ -107,7 +108,7 @@ public struct MultilineTextField: View {
         
         public var body: some View {
             if #available(iOS 16.0, *) {
-                TextField("", text: $viewModel.text, axis: .vertical)
+                TextField(viewModel.placeholder, text: $viewModel.text, axis: .vertical)
                     .introspect(.textEditor, on: .iOS(.v16)) { view in
                         view.delegate = viewModel
                     }
@@ -125,29 +126,35 @@ public struct MultilineTextField: View {
                         }
                     }
             } else {
-                TextEditor(text: $viewModel.text)
-                    .introspect(.textEditor, on: .iOS(.v15)) { view in
-                        view.delegate = viewModel
-                        view.isScrollEnabled = false
-                        view.textContainer.lineFragmentPadding = 0
-                        view.textContainerInset = .zero
-                        view.contentInset = .zero
-                        viewModel.textView = view
-                    }
-                    .frame(height: viewModel.height)
-                    .font(viewModel.displayFont)
-                    .focused($focused)
-                    .onChange(of: focused) { focused in
-                        viewModel.focused = focused
-                        if focused {
-                            parentViewModel.focused = viewModel
+                ZStack(alignment: .topLeading) {
+                    Text(viewModel.placeholder)
+                        .foregroundColor(Color(uiColor: .placeholderText))
+                        .font(viewModel.displayFont)
+                        .opacity(viewModel.text.isEmpty ? 1 : 0)
+                    TextEditor(text: $viewModel.text)
+                        .introspect(.textEditor, on: .iOS(.v15)) { view in
+                            view.delegate = viewModel
+                            view.isScrollEnabled = false
+                            view.textContainer.lineFragmentPadding = 0
+                            view.textContainerInset = .zero
+                            view.contentInset = .zero
+                            viewModel.textView = view
                         }
+                        .frame(height: viewModel.height)
+                        .font(viewModel.displayFont)
+                        .focused($focused)
+                }
+                .onChange(of: focused) { focused in
+                    viewModel.focused = focused
+                    if focused {
+                        parentViewModel.focused = viewModel
                     }
-                    .onReceive(viewModel.$focused) { value in
-                        if value && value != focused {
-                            focused = true
-                        }
+                }
+                .onReceive(viewModel.$focused) { value in
+                    if value && value != focused {
+                        focused = true
                     }
+                }
             }
         }
     }
