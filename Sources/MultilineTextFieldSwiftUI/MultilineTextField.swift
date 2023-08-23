@@ -21,12 +21,12 @@ public struct MultilineTextField: View {
     @State private var fontSize: CGFloat?
     @ObservedObject public var viewModel: MultilineTextFieldViewModel
     
-    public init(regularFontSize: CGFloat = 14, mediumFontSize: CGFloat = 16, minHeight: CGFloat? = 50, placeholder: String = "", background: Color, focused: Bool = true, onChanged: @escaping ([MultilinTextData]) -> Void) {
+    public init(data: [MultilineTextData]? = nil, regularFontSize: CGFloat = 14, mediumFontSize: CGFloat = 16, minHeight: CGFloat? = 50, placeholder: String = "", background: Color, focused: Bool = true, onChanged: @escaping ([MultilineTextData]) -> Void) {
         self.regularFontSize = regularFontSize
         self.mediumFontSize = mediumFontSize
         self.minHeight = minHeight
         self.background = background
-        viewModel = .init(font: regularFontSize, placeholder: placeholder, focused: focused, onChanged: onChanged)
+        viewModel = .init(data: data, font: regularFontSize, placeholder: placeholder, focused: focused, onChanged: onChanged)
     }
     
     public var body: some View {

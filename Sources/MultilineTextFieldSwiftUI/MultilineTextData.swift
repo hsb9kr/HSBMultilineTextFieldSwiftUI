@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct MultilinTextData {
+public struct MultilineTextData: Codable {
     public let bold: Bool
     public let fontSize: CGFloat
     public let text: String

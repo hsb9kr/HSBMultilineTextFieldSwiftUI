@@ -18,8 +18,13 @@ public class MultilineTextFieldItemViewModel: NSObject, ObservableObject {
     @Published public var fontSize: CGFloat
     @Published public var focused: Bool = false
     @Published public var height: CGFloat = 17
-    public var textView: UITextView?
-    public var data: MultilinTextData {
+    public var textView: UITextView? {
+        didSet {
+            guard let textView = textView else { return }
+            textView.selectedTextRange = textView.textRange(from: textView.endOfDocument, to: textView.endOfDocument)
+        }
+    }
+    public var data: MultilineTextData {
         .init(bold: bold, fontSize: fontSize, text: text)
     }
     
@@ -30,9 +35,11 @@ public class MultilineTextFieldItemViewModel: NSObject, ObservableObject {
         return font
     }
     
-    public init(placeholder: String = "", font size: CGFloat, onRemove: @escaping (MultilineTextFieldItemViewModel) -> Void) {
+    public init(placeholder: String = "", text: String = "", font size: CGFloat, bold: Bool = false, onRemove: @escaping (MultilineTextFieldItemViewModel) -> Void) {
         self.placeholder = placeholder
+        self.text = text
         self.fontSize = size
+        self.bold = bold
         self.onRemove = onRemove
         super.init()
         $bold
@@ -80,5 +87,8 @@ extension MultilineTextFieldItemViewModel: UITextViewDelegate {
     public func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         sizeToFit(textView: textView)
         return true
+    }
+    public func textViewDidChangeSelection(_ textView: UITextView) {
+        debugPrint(#function)
     }
 }

@@ -13,12 +13,26 @@ public class MultilineTextFieldViewModel: ObservableObject {
     @Published public var viewModels: [MultilineTextFieldItemViewModel] = []
     @Published public var focused: MultilineTextFieldItemViewModel?
     
-    public init(font size: CGFloat, placeholder: String, focused: Bool, onChanged: @escaping ([MultilinTextData]) -> Void) {
-        let itemViewModel: MultilineTextFieldItemViewModel = .init(placeholder: placeholder, font: size, onRemove: { viewModel in
-            self.onRemove(viewModel: viewModel)
-        })
-        viewModels = [itemViewModel]
-        itemViewModel.focused = focused
+    public init(data: [MultilineTextData]?, font size: CGFloat, placeholder: String, focused: Bool, onChanged: @escaping ([MultilineTextData]) -> Void) {
+        if let data = data {
+            viewModels = data.enumerated().map { index, item in
+                let placeholder: String = index == 0 ? placeholder : ""
+                let itemViewModel: MultilineTextFieldItemViewModel = .init(placeholder: placeholder, text: item.text, font: item.fontSize, bold: item.bold, onRemove: { viewModel in
+                    self.onRemove(viewModel: viewModel)
+                })
+                return itemViewModel
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.viewModels.last?.focused = true
+            }
+        } else {
+            let itemViewModel: MultilineTextFieldItemViewModel = .init(placeholder: placeholder, font: size, onRemove: { viewModel in
+                self.onRemove(viewModel: viewModel)
+            })
+            viewModels = [itemViewModel]
+            itemViewModel.focused = focused
+        }
+        
         $viewModels
             .flatMap { viewModels in
                 let textPublisher = Publishers
@@ -40,7 +54,7 @@ public class MultilineTextFieldViewModel: ObservableObject {
             .receive(on: RunLoop.main)
             .sink { [weak self] _ in
                 guard let `self` = self else { return }
-                let data: [MultilinTextData] = self.viewModels.map { $0.data }
+                let data: [MultilineTextData] = self.viewModels.map { $0.data }
                 onChanged(data)
             }
             .store(in: &cancellables)
