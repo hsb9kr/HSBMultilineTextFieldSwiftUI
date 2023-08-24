@@ -18,12 +18,12 @@ struct ContentView: View {
 //            .frame(height: 200)
             
             ScrollView {
-                MultilineTextField(data: [
+                HSBMultilineTextField(data: [
                     .init(bold: true, fontSize: 14, text: "ABCDEF"),
                     .init(bold: false, fontSize: 17, text: "안녕하세요"),
                     .init(bold: false, fontSize: 17, text: "Hola"),
                     .init(bold: true, fontSize: 17, text: "하이"),
-                ], placeholder: "Placeholder", background: .white) { data in
+                ], placeholder: "Placeholder", background: .gray) { data in
                     debugPrint(data)
                 }
             }

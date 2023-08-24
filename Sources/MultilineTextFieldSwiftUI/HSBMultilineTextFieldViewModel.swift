@@ -1,6 +1,6 @@
 //
 //  MultilineTextFieldViewModel.swift
-//  MultilineTextField
+//  HSBMultilineTextField
 //
 //  Created by Red on 2023/08/22.
 //
@@ -8,16 +8,16 @@
 import SwiftUI
 import Combine
 
-public class MultilineTextFieldViewModel: ObservableObject {
+public class HSBMultilineTextFieldViewModel: ObservableObject {
     private var cancellables: Set<AnyCancellable> = []
-    @Published public var viewModels: [MultilineTextFieldItemViewModel] = []
-    @Published public var focused: MultilineTextFieldItemViewModel?
+    @Published public var viewModels: [HSBMultilineTextFieldItemViewModel] = []
+    @Published public var focused: HSBMultilineTextFieldItemViewModel?
     
-    public init(data: [MultilineTextData]?, font size: CGFloat, placeholder: String, focused: Bool, onChanged: @escaping ([MultilineTextData]) -> Void) {
+    public init(data: [HSBMultilineTextData]?, font size: CGFloat, placeholder: String, focused: Bool, onChanged: @escaping ([HSBMultilineTextData]) -> Void) {
         if let data = data {
             viewModels = data.enumerated().map { index, item in
                 let placeholder: String = index == 0 ? placeholder : ""
-                let itemViewModel: MultilineTextFieldItemViewModel = .init(placeholder: placeholder, text: item.text, font: item.fontSize, bold: item.bold, onRemove: { viewModel in
+                let itemViewModel: HSBMultilineTextFieldItemViewModel = .init(placeholder: placeholder, text: item.text, font: item.fontSize, bold: item.bold, onRemove: { viewModel in
                     self.onRemove(viewModel: viewModel)
                 })
                 return itemViewModel
@@ -26,7 +26,7 @@ public class MultilineTextFieldViewModel: ObservableObject {
                 self.viewModels.last?.focused = true
             }
         } else {
-            let itemViewModel: MultilineTextFieldItemViewModel = .init(placeholder: placeholder, font: size, onRemove: { viewModel in
+            let itemViewModel: HSBMultilineTextFieldItemViewModel = .init(placeholder: placeholder, font: size, onRemove: { viewModel in
                 self.onRemove(viewModel: viewModel)
             })
             viewModels = [itemViewModel]
@@ -54,13 +54,13 @@ public class MultilineTextFieldViewModel: ObservableObject {
             .receive(on: RunLoop.main)
             .sink { [weak self] _ in
                 guard let `self` = self else { return }
-                let data: [MultilineTextData] = self.viewModels.map { $0.data }
+                let data: [HSBMultilineTextData] = self.viewModels.map { $0.data }
                 onChanged(data)
             }
             .store(in: &cancellables)
     }
     
-    public func onRemove(viewModel: MultilineTextFieldItemViewModel) {
+    public func onRemove(viewModel: HSBMultilineTextFieldItemViewModel) {
         guard let index = viewModels.firstIndex(of: viewModel), index > 0 else { return }
         viewModels.remove(at: index)
         let viewModel = viewModels[index - 1]

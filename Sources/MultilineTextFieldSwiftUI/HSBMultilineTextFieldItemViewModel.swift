@@ -1,6 +1,6 @@
 //
 //  MultilineTextFieldItemViewModel.swift
-//  MultilineTextField
+//  HSBMultilineTextField
 //
 //  Created by Red on 2023/08/22.
 //
@@ -8,9 +8,9 @@
 import SwiftUI
 import Combine
 
-public class MultilineTextFieldItemViewModel: NSObject, ObservableObject {
+public class HSBMultilineTextFieldItemViewModel: NSObject, ObservableObject {
     
-    private let onRemove: (MultilineTextFieldItemViewModel) -> Void
+    private let onRemove: (HSBMultilineTextFieldItemViewModel) -> Void
     private var cancellables: Set<AnyCancellable> = []
     public let placeholder: String
     @Published public var text: String = ""
@@ -24,7 +24,7 @@ public class MultilineTextFieldItemViewModel: NSObject, ObservableObject {
             textView.selectedTextRange = textView.textRange(from: textView.endOfDocument, to: textView.endOfDocument)
         }
     }
-    public var data: MultilineTextData {
+    public var data: HSBMultilineTextData {
         .init(bold: bold, fontSize: fontSize, text: text)
     }
     
@@ -35,7 +35,7 @@ public class MultilineTextFieldItemViewModel: NSObject, ObservableObject {
         return font
     }
     
-    public init(placeholder: String = "", text: String = "", font size: CGFloat, bold: Bool = false, onRemove: @escaping (MultilineTextFieldItemViewModel) -> Void) {
+    public init(placeholder: String = "", text: String = "", font size: CGFloat, bold: Bool = false, onRemove: @escaping (HSBMultilineTextFieldItemViewModel) -> Void) {
         self.placeholder = placeholder
         self.text = text
         self.fontSize = size
@@ -55,7 +55,7 @@ public class MultilineTextFieldItemViewModel: NSObject, ObservableObject {
     }
 }
 
-extension MultilineTextFieldItemViewModel: UITextViewDelegate {
+extension HSBMultilineTextFieldItemViewModel: UITextViewDelegate {
     public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         guard textView.text.isEmpty, let char = text.cString(using: String.Encoding.utf8) else {
             return true

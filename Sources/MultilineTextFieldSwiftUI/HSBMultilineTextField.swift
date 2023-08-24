@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 import SwiftUIIntrospect
 
-public struct MultilineTextField: View {
+public struct HSBMultilineTextField: View {
     
     private let regularFontSize: CGFloat
     private let mediumFontSize: CGFloat
@@ -19,9 +19,9 @@ public struct MultilineTextField: View {
     private let background: Color
     @State private var bold: Bool?
     @State private var fontSize: CGFloat?
-    @ObservedObject public var viewModel: MultilineTextFieldViewModel
+    @ObservedObject public var viewModel: HSBMultilineTextFieldViewModel
     
-    public init(data: [MultilineTextData]? = nil, regularFontSize: CGFloat = 14, mediumFontSize: CGFloat = 16, minHeight: CGFloat? = 50, placeholder: String = "", background: Color, focused: Bool = true, onChanged: @escaping ([MultilineTextData]) -> Void) {
+    public init(data: [HSBMultilineTextData]? = nil, regularFontSize: CGFloat = 14, mediumFontSize: CGFloat = 16, minHeight: CGFloat? = 50, placeholder: String = "", background: Color, focused: Bool = true, onChanged: @escaping ([HSBMultilineTextData]) -> Void) {
         self.regularFontSize = regularFontSize
         self.mediumFontSize = mediumFontSize
         self.minHeight = minHeight
@@ -44,13 +44,14 @@ public struct MultilineTextField: View {
                         viewModel.viewModels.last?.focused = true
                         return
                     }
-                    let itemViewModel: MultilineTextFieldItemViewModel = .init(font: regularFontSize, onRemove: { viewModel in
+                    let itemViewModel: HSBMultilineTextFieldItemViewModel = .init(font: regularFontSize, onRemove: { viewModel in
                         self.viewModel.onRemove(viewModel: viewModel)
                     })
                     viewModel.viewModels.append(itemViewModel)
                     itemViewModel.focused = true
                 }
         }
+        .background(background)
         .onReceive(viewModel.$focused) { focused in
             bold = focused?.bold
             fontSize = focused?.fontSize
@@ -102,8 +103,8 @@ public struct MultilineTextField: View {
     
     public struct ItemView: View {
         
-        @EnvironmentObject var parentViewModel: MultilineTextFieldViewModel
-        @ObservedObject public var viewModel: MultilineTextFieldItemViewModel
+        @EnvironmentObject var parentViewModel: HSBMultilineTextFieldViewModel
+        @ObservedObject public var viewModel: HSBMultilineTextFieldItemViewModel
         @FocusState private var focused: Bool
         
         public var body: some View {

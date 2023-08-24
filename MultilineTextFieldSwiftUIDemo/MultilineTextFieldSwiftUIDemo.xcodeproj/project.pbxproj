@@ -11,10 +11,10 @@
 		CCC101272A95F62400422865 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC101262A95F62400422865 /* ContentView.swift */; };
 		CCC101292A95F62500422865 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CCC101282A95F62500422865 /* Assets.xcassets */; };
 		CCC1012D2A95F62500422865 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CCC1012C2A95F62500422865 /* Preview Assets.xcassets */; };
-		CCC101412A95F75D00422865 /* MultilineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1013D2A95F75D00422865 /* MultilineTextField.swift */; };
-		CCC101422A95F75D00422865 /* MultilineTextData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1013E2A95F75D00422865 /* MultilineTextData.swift */; };
-		CCC101432A95F75D00422865 /* MultilineTextFieldItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1013F2A95F75D00422865 /* MultilineTextFieldItemViewModel.swift */; };
-		CCC101442A95F75D00422865 /* MultilineTextFieldViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC101402A95F75D00422865 /* MultilineTextFieldViewModel.swift */; };
+		CCC101412A95F75D00422865 /* HSBMultilineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1013D2A95F75D00422865 /* HSBMultilineTextField.swift */; };
+		CCC101422A95F75D00422865 /* HSBMultilineTextData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1013E2A95F75D00422865 /* HSBMultilineTextData.swift */; };
+		CCC101432A95F75D00422865 /* HSBMultilineTextFieldItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC1013F2A95F75D00422865 /* HSBMultilineTextFieldItemViewModel.swift */; };
+		CCC101442A95F75D00422865 /* HSBMultilineTextFieldViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC101402A95F75D00422865 /* HSBMultilineTextFieldViewModel.swift */; };
 		CCC101472A95F77200422865 /* SwiftUIIntrospect in Frameworks */ = {isa = PBXBuildFile; productRef = CCC101462A95F77200422865 /* SwiftUIIntrospect */; };
 /* End PBXBuildFile section */
 
@@ -25,10 +25,10 @@
 		CCC101282A95F62500422865 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CCC1012A2A95F62500422865 /* MultilineTextFieldSwiftUIDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MultilineTextFieldSwiftUIDemo.entitlements; sourceTree = "<group>"; };
 		CCC1012C2A95F62500422865 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		CCC1013D2A95F75D00422865 /* MultilineTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MultilineTextField.swift; path = ../../Sources/MultilineTextFieldSwiftUI/MultilineTextField.swift; sourceTree = "<group>"; };
-		CCC1013E2A95F75D00422865 /* MultilineTextData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MultilineTextData.swift; path = ../../Sources/MultilineTextFieldSwiftUI/MultilineTextData.swift; sourceTree = "<group>"; };
-		CCC1013F2A95F75D00422865 /* MultilineTextFieldItemViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MultilineTextFieldItemViewModel.swift; path = ../../Sources/MultilineTextFieldSwiftUI/MultilineTextFieldItemViewModel.swift; sourceTree = "<group>"; };
-		CCC101402A95F75D00422865 /* MultilineTextFieldViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MultilineTextFieldViewModel.swift; path = ../../Sources/MultilineTextFieldSwiftUI/MultilineTextFieldViewModel.swift; sourceTree = "<group>"; };
+		CCC1013D2A95F75D00422865 /* HSBMultilineTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HSBMultilineTextField.swift; path = ../../Sources/MultilineTextFieldSwiftUI/HSBMultilineTextField.swift; sourceTree = "<group>"; };
+		CCC1013E2A95F75D00422865 /* HSBMultilineTextData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HSBMultilineTextData.swift; path = ../../Sources/MultilineTextFieldSwiftUI/HSBMultilineTextData.swift; sourceTree = "<group>"; };
+		CCC1013F2A95F75D00422865 /* HSBMultilineTextFieldItemViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HSBMultilineTextFieldItemViewModel.swift; path = ../../Sources/MultilineTextFieldSwiftUI/HSBMultilineTextFieldItemViewModel.swift; sourceTree = "<group>"; };
+		CCC101402A95F75D00422865 /* HSBMultilineTextFieldViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HSBMultilineTextFieldViewModel.swift; path = ../../Sources/MultilineTextFieldSwiftUI/HSBMultilineTextFieldViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,10 +64,10 @@
 			children = (
 				CCC101242A95F62400422865 /* MultilineTextFieldSwiftUIDemoApp.swift */,
 				CCC101262A95F62400422865 /* ContentView.swift */,
-				CCC1013D2A95F75D00422865 /* MultilineTextField.swift */,
-				CCC1013F2A95F75D00422865 /* MultilineTextFieldItemViewModel.swift */,
-				CCC101402A95F75D00422865 /* MultilineTextFieldViewModel.swift */,
-				CCC1013E2A95F75D00422865 /* MultilineTextData.swift */,
+				CCC1013D2A95F75D00422865 /* HSBMultilineTextField.swift */,
+				CCC1013F2A95F75D00422865 /* HSBMultilineTextFieldItemViewModel.swift */,
+				CCC101402A95F75D00422865 /* HSBMultilineTextFieldViewModel.swift */,
+				CCC1013E2A95F75D00422865 /* HSBMultilineTextData.swift */,
 				CCC101282A95F62500422865 /* Assets.xcassets */,
 				CCC1012A2A95F62500422865 /* MultilineTextFieldSwiftUIDemo.entitlements */,
 				CCC1012B2A95F62500422865 /* Preview Content */,
@@ -159,11 +159,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CCC101442A95F75D00422865 /* MultilineTextFieldViewModel.swift in Sources */,
-				CCC101412A95F75D00422865 /* MultilineTextField.swift in Sources */,
+				CCC101442A95F75D00422865 /* HSBMultilineTextFieldViewModel.swift in Sources */,
+				CCC101412A95F75D00422865 /* HSBMultilineTextField.swift in Sources */,
 				CCC101272A95F62400422865 /* ContentView.swift in Sources */,
-				CCC101422A95F75D00422865 /* MultilineTextData.swift in Sources */,
-				CCC101432A95F75D00422865 /* MultilineTextFieldItemViewModel.swift in Sources */,
+				CCC101422A95F75D00422865 /* HSBMultilineTextData.swift in Sources */,
+				CCC101432A95F75D00422865 /* HSBMultilineTextFieldItemViewModel.swift in Sources */,
 				CCC101252A95F62400422865 /* MultilineTextFieldSwiftUIDemoApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
