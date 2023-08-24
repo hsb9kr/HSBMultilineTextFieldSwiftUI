@@ -19,14 +19,15 @@ public struct HSBMultilineTextField: View {
     private let background: Color
     @State private var bold: Bool?
     @State private var fontSize: CGFloat?
-    @ObservedObject public var viewModel: HSBMultilineTextFieldViewModel
+    @StateObject private var viewModel: HSBMultilineTextFieldViewModel
     
     public init(data: [HSBMultilineTextData]? = nil, regularFontSize: CGFloat = 14, mediumFontSize: CGFloat = 16, minHeight: CGFloat? = 50, placeholder: String = "", background: Color, focused: Bool = true, onChanged: @escaping ([HSBMultilineTextData]) -> Void) {
         self.regularFontSize = regularFontSize
         self.mediumFontSize = mediumFontSize
         self.minHeight = minHeight
         self.background = background
-        viewModel = .init(data: data, font: regularFontSize, placeholder: placeholder, focused: focused, onChanged: onChanged)
+        let viewModel: HSBMultilineTextFieldViewModel = .init(data: data, font: regularFontSize, placeholder: placeholder, focused: focused, onChanged: onChanged)
+        self._viewModel = StateObject(wrappedValue: viewModel)
     }
     
     public var body: some View {

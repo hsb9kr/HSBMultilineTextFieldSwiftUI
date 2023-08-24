@@ -14,6 +14,10 @@ public class HSBMultilineTextFieldViewModel: ObservableObject {
     @Published public var focused: HSBMultilineTextFieldItemViewModel?
     
     public init(data: [HSBMultilineTextData]?, font size: CGFloat, placeholder: String, focused: Bool, onChanged: @escaping ([HSBMultilineTextData]) -> Void) {
+        initialize(data: data, font: size, placeholder: placeholder, focused: focused, onChanged: onChanged)
+    }
+    
+    public func initialize(data: [HSBMultilineTextData]?, font size: CGFloat, placeholder: String, focused: Bool, onChanged: @escaping ([HSBMultilineTextData]) -> Void) {
         if let data = data {
             viewModels = data.enumerated().map { index, item in
                 let placeholder: String = index == 0 ? placeholder : ""
