@@ -71,7 +71,9 @@ extension HSBMultilineTextFieldItemViewModel: UITextViewDelegate {
         let fixedWidth = textView.frame.size.width
         let newSize = textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
         if height != newSize.height {
-            height = newSize.height
+            DispatchQueue.main.async {
+                self.height = newSize.height
+            }
         }
     }
     
@@ -87,8 +89,5 @@ extension HSBMultilineTextFieldItemViewModel: UITextViewDelegate {
     public func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         sizeToFit(textView: textView)
         return true
-    }
-    public func textViewDidChangeSelection(_ textView: UITextView) {
-        debugPrint(#function)
     }
 }

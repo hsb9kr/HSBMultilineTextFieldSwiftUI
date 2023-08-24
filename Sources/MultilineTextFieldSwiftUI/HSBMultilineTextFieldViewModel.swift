@@ -30,7 +30,9 @@ public class HSBMultilineTextFieldViewModel: ObservableObject {
                 self.onRemove(viewModel: viewModel)
             })
             viewModels = [itemViewModel]
-            itemViewModel.focused = focused
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                itemViewModel.focused = focused
+            }
         }
         
         $viewModels

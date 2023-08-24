@@ -112,6 +112,7 @@ public struct HSBMultilineTextField: View {
                 TextField(viewModel.placeholder, text: $viewModel.text, axis: .vertical)
                     .introspect(.textEditor, on: .iOS(.v16)) { view in
                         view.delegate = viewModel
+                        viewModel.textView = view
                     }
                     .font(viewModel.displayFont)
                     .focused($focused)
