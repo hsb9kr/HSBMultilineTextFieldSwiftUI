@@ -12,6 +12,7 @@ public class HSBMultilineTextFieldItemViewModel: NSObject, ObservableObject {
     
     private let onRemove: (HSBMultilineTextFieldItemViewModel) -> Void
     private var cancellables: Set<AnyCancellable> = []
+    private var isFirst: Bool = true
     public let placeholder: String
     @Published public var text: String = ""
     @Published public var bold = false
@@ -20,8 +21,9 @@ public class HSBMultilineTextFieldItemViewModel: NSObject, ObservableObject {
     @Published public var height: CGFloat = 17
     public var textView: UITextView? {
         didSet {
-            guard let textView = textView else { return }
+            guard let textView = textView, isFirst else { return }
             textView.selectedTextRange = textView.textRange(from: textView.endOfDocument, to: textView.endOfDocument)
+            isFirst = false
         }
     }
     public var data: HSBMultilineTextData {
@@ -78,7 +80,9 @@ extension HSBMultilineTextFieldItemViewModel: UITextViewDelegate {
     }
     
     public func textViewDidChange(_ textView: UITextView) {
-        text = textView.text
+        DispatchQueue.main.async {
+            self.text = textView.text
+        }
         sizeToFit(textView: textView)
     }
     
