@@ -9,24 +9,33 @@ import SwiftUI
 import Combine
 import SwiftUIIntrospect
 
-public struct HSBMultilineTextField: View {
+public struct HSBMultilineTextField<Content>: View where Content: CustomizableToolbarContent {
     
-    private let regularFontSize: CGFloat
-    private let mediumFontSize: CGFloat
-    private let backgroundColor: Color = Color(uiColor: UIColor.systemBackground)
-    private let padding: CGFloat = 4
     private let minHeight: CGFloat
     private let background: Color
-    @State private var bold: Bool?
-    @State private var fontSize: CGFloat?
+	private let toolBarContent: (HSBMultilineTextFieldViewModel) -> Content
     @StateObject private var viewModel: HSBMultilineTextFieldViewModel
     
-    public init(placeholder: String = "", data: [HSBMultilineTextData]? = nil, regularFontSize: CGFloat = 15, mediumFontSize: CGFloat = 18, minHeight: CGFloat = 10, background: Color, focused: Bool = true, onChanged: @escaping ([HSBMultilineTextData]) -> Void) {
-        self.regularFontSize = regularFontSize
-        self.mediumFontSize = mediumFontSize
+    public init(
+		placeholder: String = "",
+		data: [HSBMultilineTextData]? = nil,
+		fontSizeList: [CGFloat] = [15, 18],
+		minHeight: CGFloat = 10,
+		background: Color,
+		focused: Bool = true,
+		onChanged: @escaping ([HSBMultilineTextData]) -> Void,
+		@ToolbarContentBuilder toolBar content: @escaping (HSBMultilineTextFieldViewModel) -> Content
+	) {
         self.minHeight = minHeight
         self.background = background
-        let viewModel: HSBMultilineTextFieldViewModel = .init(data: data, font: regularFontSize, placeholder: placeholder, focused: focused, onChanged: onChanged)
+		self.toolBarContent = content
+        let viewModel: HSBMultilineTextFieldViewModel = .init(
+			placeholder: placeholder,
+			data: data,
+			fontSizeList: fontSizeList,
+			focused: focused,
+			onChanged: onChanged
+		)
         self._viewModel = StateObject(wrappedValue: viewModel)
     }
     
@@ -42,15 +51,7 @@ public struct HSBMultilineTextField: View {
                         .foregroundColor(background)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .onTapGesture {
-                            guard let last = viewModel.viewModels.last, !last.text.isEmpty else {
-                                viewModel.viewModels.last?.focused = true
-                                return
-                            }
-                            let itemViewModel: HSBMultilineTextFieldItemViewModel = .init(font: regularFontSize, onRemove: { viewModel in
-                                self.viewModel.onRemove(viewModel: viewModel)
-                            })
-                            viewModel.viewModels.append(itemViewModel)
-                            itemViewModel.focused = true
+							addNewLine()
                         }
                 }
             }
@@ -58,64 +59,17 @@ public struct HSBMultilineTextField: View {
                 .foregroundColor(background)
                 .frame(height: minHeight)
                 .onTapGesture {
-                    guard let last = viewModel.viewModels.last, !last.text.isEmpty else {
-                        viewModel.viewModels.last?.focused = true
-                        return
-                    }
-                    let itemViewModel: HSBMultilineTextFieldItemViewModel = .init(font: regularFontSize, onRemove: { viewModel in
-                        self.viewModel.onRemove(viewModel: viewModel)
-                    })
-                    viewModel.viewModels.append(itemViewModel)
-                    itemViewModel.focused = true
+                    addNewLine()
                 }
         }
         .background(background)
         .onReceive(viewModel.$focused) { focused in
-            bold = focused?.bold
-            fontSize = focused?.fontSize
+			viewModel.bold = focused?.bold
+			viewModel.fontSize = focused?.fontSize
         }
         .environmentObject(viewModel)
         .toolbar(id: "editingTools") {
-            ToolbarItem(id: "bold", placement: .keyboard) {
-                Button {
-                    viewModel.focused?.bold.toggle()
-                    bold = viewModel.focused?.bold
-                } label: {
-                    Image(systemName: "bold")
-                        .padding(padding)
-                        .background(bold == true ? backgroundColor.cornerRadius(4) : nil)
-                }
-            }
-            ToolbarItem(id: "regular", placement: .keyboard) {
-                Button {
-                    viewModel.focused?.fontSize = regularFontSize
-                    fontSize = viewModel.focused?.fontSize
-                } label: {
-                    Image(systemName: "textformat.size.smaller")
-                        .padding(padding)
-                        .background(fontSize == regularFontSize ? backgroundColor.cornerRadius(4) : nil)
-                }
-            }
-
-            ToolbarItem(id: "medium", placement: .keyboard) {
-                Button {
-                    viewModel.focused?.fontSize = mediumFontSize
-                    fontSize = viewModel.focused?.fontSize
-                } label: {
-                    Image(systemName: "textformat.size.larger")
-                        .padding(padding)
-                        .background(fontSize == mediumFontSize ? backgroundColor.cornerRadius(4) : nil)
-                }
-            }
-            ToolbarItem(id: "space", placement: .keyboard) {
-                Spacer()
-            }
-        }
-        .onAppear {
-            UITextView.appearance().backgroundColor = .clear
-        }
-        .onDisappear {
-            UITextView.appearance().backgroundColor = nil
+            toolBarContent(viewModel)
         }
     }
     
@@ -155,6 +109,7 @@ public struct HSBMultilineTextField: View {
                                     view.textContainer.lineFragmentPadding = 0
                                     view.textContainerInset = .zero
                                     view.contentInset = .zero
+									view.backgroundColor = .clear
                                     viewModel.textView = view
                                 }
                         }
@@ -173,6 +128,18 @@ public struct HSBMultilineTextField: View {
             }
         }
     }
+	
+	fileprivate func addNewLine() {
+		guard let last = viewModel.viewModels.last, !last.text.isEmpty else {
+			viewModel.viewModels.last?.focused = true
+			return
+		}
+		let itemViewModel: HSBMultilineTextFieldItemViewModel = .init(font: viewModel.fontSizeList.first!, onRemove: { viewModel in
+			self.viewModel.onRemove(viewModel: viewModel)
+		})
+		viewModel.viewModels.append(itemViewModel)
+		itemViewModel.focused = true
+	}
 }
 
 extension View {

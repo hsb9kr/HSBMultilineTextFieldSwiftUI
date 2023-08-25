@@ -14,8 +14,9 @@ public class HSBMultilineTextFieldItemViewModel: NSObject, ObservableObject {
     private var cancellables: Set<AnyCancellable> = []
     private var isFirst: Bool = true
     public let placeholder: String
-    @Published public var text: String = ""
-    @Published public var bold = false
+    @Published public var text: String
+	@Published public var bold: Bool
+	@Published public var italic: Bool
     @Published public var fontSize: CGFloat
     @Published public var focused: Bool = false
     @Published public var height: CGFloat = 17
@@ -27,21 +28,22 @@ public class HSBMultilineTextFieldItemViewModel: NSObject, ObservableObject {
         }
     }
     public var data: HSBMultilineTextData {
-        .init(bold: bold, fontSize: fontSize, text: text)
+        .init(bold: bold, italic: italic, fontSize: fontSize, text: text)
     }
     
     public var displayFont: Font {
         let font = Font.system(
            size: CGFloat(fontSize),
              weight: bold == true ? .bold : .regular)
-        return font
+		return italic ? font.italic() : font
     }
     
-    public init(placeholder: String = "", text: String = "", font size: CGFloat, bold: Bool = false, onRemove: @escaping (HSBMultilineTextFieldItemViewModel) -> Void) {
+	public init(placeholder: String = "", text: String = "", font size: CGFloat, bold: Bool = false, italic: Bool = false, onRemove: @escaping (HSBMultilineTextFieldItemViewModel) -> Void) {
         self.placeholder = placeholder
         self.text = text
         self.fontSize = size
         self.bold = bold
+		self.italic = italic
         self.onRemove = onRemove
         super.init()
         $bold

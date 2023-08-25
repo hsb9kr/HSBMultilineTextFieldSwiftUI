@@ -10,18 +10,26 @@ import Combine
 
 public class HSBMultilineTextFieldViewModel: ObservableObject {
     private var cancellables: Set<AnyCancellable> = []
+	let fontSizeList: [CGFloat]
+	@Published public var italic: Bool?
+	@Published public var bold: Bool?
+	@Published public var fontSize: CGFloat?
     @Published public var viewModels: [HSBMultilineTextFieldItemViewModel] = []
     @Published public var focused: HSBMultilineTextFieldItemViewModel?
     
-    public init(data: [HSBMultilineTextData]?, font size: CGFloat, placeholder: String, focused: Bool, onChanged: @escaping ([HSBMultilineTextData]) -> Void) {
-        initialize(data: data, font: size, placeholder: placeholder, focused: focused, onChanged: onChanged)
+    public init(placeholder: String, data: [HSBMultilineTextData]?, fontSizeList: [CGFloat], focused: Bool, onChanged: @escaping ([HSBMultilineTextData]) -> Void) {
+		guard !fontSizeList.isEmpty else {
+			fatalError("font size is 0")
+		}
+		self.fontSizeList = fontSizeList
+        initialize(placeholder: placeholder, data: data, focused: focused, onChanged: onChanged)
     }
     
-    public func initialize(data: [HSBMultilineTextData]?, font size: CGFloat, placeholder: String, focused: Bool, onChanged: @escaping ([HSBMultilineTextData]) -> Void) {
+    public func initialize(placeholder: String, data: [HSBMultilineTextData]?, focused: Bool, onChanged: @escaping ([HSBMultilineTextData]) -> Void) {
         if let data = data {
             viewModels = data.enumerated().map { index, item in
                 let placeholder: String = index == 0 ? placeholder : ""
-                let itemViewModel: HSBMultilineTextFieldItemViewModel = .init(placeholder: placeholder, text: item.text, font: item.fontSize, bold: item.bold, onRemove: { viewModel in
+				let itemViewModel: HSBMultilineTextFieldItemViewModel = .init(placeholder: placeholder, text: item.text, font: item.fontSize, bold: item.bold, italic: item.italic, onRemove: { viewModel in
                     self.onRemove(viewModel: viewModel)
                 })
                 return itemViewModel
@@ -30,7 +38,7 @@ public class HSBMultilineTextFieldViewModel: ObservableObject {
                 self.viewModels.last?.focused = true
             }
         } else {
-            let itemViewModel: HSBMultilineTextFieldItemViewModel = .init(placeholder: placeholder, font: size, onRemove: { viewModel in
+			let itemViewModel: HSBMultilineTextFieldItemViewModel = .init(placeholder: placeholder, font: fontSizeList.first!, onRemove: { viewModel in
                 self.onRemove(viewModel: viewModel)
             })
             viewModels = [itemViewModel]
