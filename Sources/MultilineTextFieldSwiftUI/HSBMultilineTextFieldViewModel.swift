@@ -10,7 +10,7 @@ import Combine
 
 public class HSBMultilineTextFieldViewModel: ObservableObject {
     private var cancellables: Set<AnyCancellable> = []
-	let fontSizeList: [CGFloat]
+	public let fontSizeList: [CGFloat]
 	@Published public var italic: Bool?
 	@Published public var bold: Bool?
 	@Published public var fontSize: CGFloat?
