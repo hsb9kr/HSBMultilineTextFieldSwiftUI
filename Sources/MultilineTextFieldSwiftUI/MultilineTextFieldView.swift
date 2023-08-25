@@ -9,27 +9,27 @@ import SwiftUI
 import Combine
 import SwiftUIIntrospect
 
-public struct HSBMultilineTextField<Content>: View where Content: CustomizableToolbarContent {
+public struct MultilineTextFieldView<Content>: View where Content: CustomizableToolbarContent {
     
     private let minHeight: CGFloat
     private let background: Color
-	private let toolBarContent: (HSBMultilineTextFieldViewModel) -> Content
-    @StateObject private var viewModel: HSBMultilineTextFieldViewModel
+	private let toolBarContent: (MultilineTextFieldViewModel) -> Content
+    @StateObject private var viewModel: MultilineTextFieldViewModel
     
     public init(
 		placeholder: String = "",
-		data: [HSBMultilineTextData]? = nil,
+		data: [MultilineTextData]? = nil,
 		fontSizeList: [CGFloat] = [15, 18],
 		minHeight: CGFloat = 10,
 		background: Color,
 		focused: Bool = true,
-		onChanged: @escaping ([HSBMultilineTextData]) -> Void,
-		@ToolbarContentBuilder toolBar content: @escaping (HSBMultilineTextFieldViewModel) -> Content
+		onChanged: @escaping ([MultilineTextData]) -> Void,
+		@ToolbarContentBuilder toolBar content: @escaping (MultilineTextFieldViewModel) -> Content
 	) {
         self.minHeight = minHeight
         self.background = background
 		self.toolBarContent = content
-        let viewModel: HSBMultilineTextFieldViewModel = .init(
+        let viewModel: MultilineTextFieldViewModel = .init(
 			placeholder: placeholder,
 			data: data,
 			fontSizeList: fontSizeList,
@@ -75,8 +75,8 @@ public struct HSBMultilineTextField<Content>: View where Content: CustomizableTo
     
     public struct ItemView: View {
         
-        @EnvironmentObject var parentViewModel: HSBMultilineTextFieldViewModel
-        @ObservedObject public var viewModel: HSBMultilineTextFieldItemViewModel
+        @EnvironmentObject var parentViewModel: MultilineTextFieldViewModel
+        @ObservedObject public var viewModel: MultilineTextFieldItemViewModel
         @FocusState private var focused: Bool
         
         public var body: some View {
@@ -134,7 +134,7 @@ public struct HSBMultilineTextField<Content>: View where Content: CustomizableTo
 			viewModel.viewModels.last?.focused = true
 			return
 		}
-		let itemViewModel: HSBMultilineTextFieldItemViewModel = .init(font: viewModel.fontSizeList.first!, onRemove: { viewModel in
+		let itemViewModel: MultilineTextFieldItemViewModel = .init(font: viewModel.fontSizeList.first!, onRemove: { viewModel in
 			self.viewModel.onRemove(viewModel: viewModel)
 		})
 		viewModel.viewModels.append(itemViewModel)

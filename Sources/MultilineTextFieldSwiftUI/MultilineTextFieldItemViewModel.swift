@@ -8,9 +8,9 @@
 import SwiftUI
 import Combine
 
-public class HSBMultilineTextFieldItemViewModel: NSObject, ObservableObject {
+public class MultilineTextFieldItemViewModel: NSObject, ObservableObject {
     
-    private let onRemove: (HSBMultilineTextFieldItemViewModel) -> Void
+    private let onRemove: (MultilineTextFieldItemViewModel) -> Void
     private var cancellables: Set<AnyCancellable> = []
     private var isFirst: Bool = true
     public let placeholder: String
@@ -27,7 +27,7 @@ public class HSBMultilineTextFieldItemViewModel: NSObject, ObservableObject {
             isFirst = false
         }
     }
-    public var data: HSBMultilineTextData {
+    public var data: MultilineTextData {
         .init(bold: bold, italic: italic, fontSize: fontSize, text: text)
     }
     
@@ -38,7 +38,7 @@ public class HSBMultilineTextFieldItemViewModel: NSObject, ObservableObject {
 		return italic ? font.italic() : font
     }
     
-	public init(placeholder: String = "", text: String = "", font size: CGFloat, bold: Bool = false, italic: Bool = false, onRemove: @escaping (HSBMultilineTextFieldItemViewModel) -> Void) {
+	public init(placeholder: String = "", text: String = "", font size: CGFloat, bold: Bool = false, italic: Bool = false, onRemove: @escaping (MultilineTextFieldItemViewModel) -> Void) {
         self.placeholder = placeholder
         self.text = text
         self.fontSize = size
@@ -59,7 +59,7 @@ public class HSBMultilineTextFieldItemViewModel: NSObject, ObservableObject {
     }
 }
 
-extension HSBMultilineTextFieldItemViewModel: UITextViewDelegate {
+extension MultilineTextFieldItemViewModel: UITextViewDelegate {
     public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         guard textView.text.isEmpty, let char = text.cString(using: String.Encoding.utf8) else {
             return true

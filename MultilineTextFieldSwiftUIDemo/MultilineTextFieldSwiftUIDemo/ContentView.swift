@@ -16,7 +16,7 @@ struct ContentView: View {
     var body: some View {
         VStack {
 			
-            HSBMultilineTextField(placeholder: "Placeholder", data: [
+            MultilineTextFieldView(placeholder: "Placeholder", data: [
                 .init(bold: true, italic: false, fontSize: 14, text: "ABCDEF"),
                 .init(bold: false, italic: false, fontSize: 17, text: "안녕하세요"),
                 .init(bold: false, italic: true, fontSize: 17, text: "Hola"),
