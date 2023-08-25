@@ -26,7 +26,7 @@ public class MultilineTextFieldViewModel: ObservableObject {
     }
     
     public func initialize(placeholder: String, data: [MultilineTextData]?, focused: Bool, onChanged: @escaping ([MultilineTextData]) -> Void) {
-        if let data = data {
+        if let data = data, !data.isEmpty {
             viewModels = data.enumerated().map { index, item in
                 let placeholder: String = index == 0 ? placeholder : ""
 				let itemViewModel: MultilineTextFieldItemViewModel = .init(placeholder: placeholder, text: item.text, font: item.fontSize, bold: item.bold, italic: item.italic, onRemove: { viewModel in
