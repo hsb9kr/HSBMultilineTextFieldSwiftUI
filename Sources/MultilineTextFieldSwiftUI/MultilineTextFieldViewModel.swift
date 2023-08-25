@@ -27,13 +27,7 @@ public class MultilineTextFieldViewModel: ObservableObject {
     
     public func initialize(placeholder: String, data: [MultilineTextData]?, focused: Bool, onChanged: @escaping ([MultilineTextData]) -> Void) {
         if let data = data, !data.isEmpty {
-            viewModels = data.enumerated().map { index, item in
-                let placeholder: String = index == 0 ? placeholder : ""
-				let itemViewModel: MultilineTextFieldItemViewModel = .init(placeholder: placeholder, text: item.text, font: item.fontSize, bold: item.bold, italic: item.italic, onRemove: { viewModel in
-                    self.onRemove(viewModel: viewModel)
-                })
-                return itemViewModel
-            }
+            viewModels = self.transform(placeholder: placeholder, data: data)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 self.viewModels.last?.focused = true
             }
@@ -72,6 +66,16 @@ public class MultilineTextFieldViewModel: ObservableObject {
                 onChanged(data)
             }
             .store(in: &cancellables)
+    }
+    
+    public func transform(placeholder: String, data: [MultilineTextData]) -> [MultilineTextFieldItemViewModel] {
+        return data.enumerated().map { index, item in
+            let placeholder: String = index == 0 ? placeholder : ""
+            let itemViewModel: MultilineTextFieldItemViewModel = .init(placeholder: placeholder, text: item.text, font: item.fontSize, bold: item.bold, italic: item.italic, onRemove: { viewModel in
+                self.onRemove(viewModel: viewModel)
+            })
+            return itemViewModel
+        }
     }
     
     public func onRemove(viewModel: MultilineTextFieldItemViewModel) {
