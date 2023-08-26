@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 import SwiftUIIntrospect
 
-public struct MultilineTextFieldView<Content>: View where Content: CustomizableToolbarContent {
+public struct MultilineTextFieldView<Content>: View where Content: ToolbarContent {
     
     private let minHeight: CGFloat
     private let background: Color
@@ -68,7 +68,7 @@ public struct MultilineTextFieldView<Content>: View where Content: CustomizableT
 			viewModel.fontSize = focused?.fontSize
         }
         .environmentObject(viewModel)
-        .toolbar(id: "editingTools") {
+        .toolbar {
             toolBarContent(viewModel)
         }
     }
