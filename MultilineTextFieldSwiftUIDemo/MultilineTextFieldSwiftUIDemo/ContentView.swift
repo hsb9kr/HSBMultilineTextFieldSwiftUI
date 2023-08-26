@@ -77,8 +77,6 @@ struct ContentView: View {
                         }
                     }
                 }
-                .frame(height: 100)
-                Spacer()
             }
             .padding()
             .sheet(isPresented: $show) {

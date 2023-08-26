@@ -49,6 +49,7 @@ public struct MultilineTextFieldView<Content>: View where Content: ToolbarConten
                     }
                     Rectangle()
                         .foregroundColor(background)
+                        .frame(height: minHeight)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .onTapGesture {
 							addNewLine()
