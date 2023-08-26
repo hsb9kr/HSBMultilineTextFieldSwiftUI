@@ -140,6 +140,11 @@ public struct MultilineTextFieldView<Content>: View where Content: ToolbarConten
 		viewModel.viewModels.append(itemViewModel)
 		itemViewModel.focused = true
 	}
+    
+    public func onLoad(_ action: ((MultilineTextFieldViewModel) -> Void)? = nil) -> some View {
+        action?(viewModel)
+        return self
+    }
 }
 
 extension View {
