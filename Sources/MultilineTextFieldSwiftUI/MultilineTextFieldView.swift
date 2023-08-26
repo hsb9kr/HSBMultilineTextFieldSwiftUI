@@ -120,6 +120,8 @@ public struct MultilineTextFieldView<Content>: View where Content: ToolbarConten
                 viewModel.focused = focused
                 if focused {
                     parentViewModel.focused = viewModel
+                } else if parentViewModel.focused == viewModel {
+                    parentViewModel.focused = nil
                 }
             }
             .onReceive(viewModel.$focused) { value in
