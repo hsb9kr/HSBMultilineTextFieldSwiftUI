@@ -20,13 +20,7 @@ public class MultilineTextFieldItemViewModel: NSObject, ObservableObject {
     @Published public var fontSize: CGFloat
     @Published public var focused: Bool = false
     @Published public var height: CGFloat = 17
-    public var textView: UITextView? {
-        didSet {
-            guard let textView = textView, isFirst else { return }
-            textView.selectedTextRange = textView.textRange(from: textView.endOfDocument, to: textView.endOfDocument)
-            isFirst = false
-        }
-    }
+    public var textView: UITextView?
     public var data: MultilineTextData {
         .init(bold: bold, italic: italic, fontSize: fontSize, text: text)
     }

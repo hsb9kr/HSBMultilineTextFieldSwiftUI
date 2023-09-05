@@ -82,6 +82,9 @@ public class MultilineTextFieldViewModel: ObservableObject {
         guard let index = viewModels.firstIndex(of: viewModel), index > 0 else { return }
         viewModels.remove(at: index)
         let viewModel = viewModels[index - 1]
+		if let textView = viewModel.textView {
+			textView.selectedTextRange = textView.textRange(from: textView.endOfDocument, to: textView.endOfDocument)
+		}
         viewModel.focused = true
     }
 }
